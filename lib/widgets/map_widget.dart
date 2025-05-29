@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:nearest_stops/models/bus_stop.dart';
+import 'package:nearest_stops/services/api_key_service.dart';
 import 'package:open_route_service/open_route_service.dart';
 
 class MapWidget extends StatefulWidget {
@@ -30,7 +31,15 @@ class _MapWidgetState extends State<MapWidget> {
   @override
   void initState() {
     super.initState();
-    _openRouteService = OpenRouteService(apiKey: '5b3ce3597851110001cf624889cf20a4940442369b0bd3475e99c907');
+    _initializeOpenRouteService();
+  }
+
+  void _initializeOpenRouteService() {
+    final apiKey = ApiKeyService.getApiKey();
+
+    if (apiKey != null) {
+      _openRouteService = OpenRouteService(apiKey: apiKey);
+    }
   }
 
   @override
@@ -42,7 +51,7 @@ class _MapWidgetState extends State<MapWidget> {
   }
 
   Future<void> _fetchRoute() async {
-    if (widget.selectedBusStop == null) {
+    if (widget.selectedBusStop == null || !ApiKeyService.hasApiKey()) {
       setState(() => _routePoints = null);
       return;
     }
