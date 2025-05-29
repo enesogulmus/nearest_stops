@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:nearest_stops/models/bus_stop.dart';
+import 'package:nearest_stops/services/bus_stop_service.dart';
 import 'package:nearest_stops/widgets/map_widget.dart';
 
 import '../services/location_service.dart';
@@ -13,6 +15,7 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   LatLng? _userLocation;
+  List<BusStop> _nearbyBusStops = [];
   bool _isLoading = true;
   String? _error;
 
@@ -29,6 +32,7 @@ class _MapScreenState extends State<MapScreen> {
 
       setState(() {
         _userLocation = userLocation;
+        _nearbyBusStops = BusStopService.getNearbyBusStops(userLocation);
         _error = null;
         _isLoading = false;
       });
@@ -69,7 +73,7 @@ class _MapScreenState extends State<MapScreen> {
 
     return Scaffold(
       appBar: AppBar(title: const Text('Yakındaki Duraklar')),
-      body: MapWidget(userLocation: _userLocation!),
+      body: MapWidget(userLocation: _userLocation!, busStops: _nearbyBusStops),
     );
   }
 }
