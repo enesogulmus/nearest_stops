@@ -81,7 +81,10 @@ class _MapScreenState extends State<MapScreen> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Yakındaki Duraklar')),
+      appBar: AppBar(
+        title: const Text('Yakındaki Duraklar'),
+        actions: [IconButton(icon: const Icon(Icons.refresh), onPressed: _initializeLocation)],
+      ),
       body: Column(
         children: [
           Expanded(flex: 2, child: MapWidget(userLocation: _userLocation!, busStops: _nearbyBusStops,selectedBusStop: _selectedBusStop, onBusStopSelected: _handleBusStopSelected,)),          if (_selectedBusStop != null)
