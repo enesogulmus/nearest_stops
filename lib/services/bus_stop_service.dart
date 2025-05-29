@@ -5,8 +5,8 @@ import 'package:nearest_stops/models/bus_stop.dart';
 
 class BusStopService {
   static final Random _random = Random();
-  static const double _maxDistance = 500; // metre cinsinden maksimum mesafe
-  static const int _numberOfStops = 5; // oluşturulacak durak sayısı
+  static const double maxDistance = 500; // metre cinsinden maksimum mesafe
+  static const int numberOfStops = 5; // oluşturulacak durak sayısı
 
   // Rastgele durak isimleri
   static final List<String> _stopNames = [
@@ -43,8 +43,8 @@ class BusStopService {
     final shuffledNames = List<String>.from(_stopNames)..shuffle(_random);
 
     // Belirtilen sayıda durak oluştur
-    for (int i = 0; i < _numberOfStops; i++) {
-      final randomLocation = _generateRandomLocation(userLocation, _maxDistance);
+    for (int i = 0; i < numberOfStops; i++) {
+      final randomLocation = _generateRandomLocation(userLocation, maxDistance);
       final distance = _calculateDistance(userLocation, randomLocation);
 
       nearbyStops.add(
